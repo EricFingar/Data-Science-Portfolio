@@ -1,0 +1,35 @@
+---
+title: "Analysis of flights continued with graphs"
+output: html_notebook
+---
+
+
+Andy Chen Lin <linac@clarkson.edu>
+Fri, Sep 15, 11:29 AM (2 days ago)
+to me
+
+library(tidyverse)
+library(janitor)
+library(here)
+library(ggplot2)
+
+install.packages("here")
+
+thisfile = here("raw_data", "DL_SelectFields_2022.zip")
+
+df2022=read_csv(thisfile) %>% clean_name
+
+df9=df2022 |> filer(passengers>0, origin=="LGA")
+
+df9 |> ggplot(aes(month)) + geom_bar()
+df9 |> ggplot(aes(month)) + geom_bar(aes(weight=departure_performed))
+df9 |> ggplot(aes(month)) + geom_bar(aes(weight=passengers))
+
+df10 = df2022 |> filer(passengers>0, origin=="LGA" | dest=="LGA")
+df10 |> ggplot(aes(month)) + geom_bar(aes(weight=passengers))
+
+df11 = df10 |> select(month, passengers, seats, carrier_name, dest, origin)
+
+df12 = df10 |> select(1:5, month, contains("id"))
+
+df13 = df11 |> ggplot(aes(percent_loading)) + geom_histogram() + facet.wrap(-carrier_name, scales="free_y")

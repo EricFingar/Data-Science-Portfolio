@@ -1,0 +1,33 @@
+---
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+install.packages("nycflights13") library(nycflights13) library(dplyr)
+library(ggplot2)
+
+#flights to Miami in September miami_flights_september \<-
+filter(flights, dest == "MIA" & month == 9)
+
+# Get unique flight numbers
+
+unique_flight_numbers \<- unique(miami_flights_september\$flight)
+
+#unique flight numbers unique_flight_numbers
+
+smallest_flight_number \<- min(unique_flight_numbers)
+
+#DataFrame df6 df6 \<- filter(flights, dest == "MIA" & flight ==
+smallest_flight_number)
+
+#visualization ggplot(df6, aes(x = dep_delay, y = arr_delay)) +
+geom_point() + labs(title = "Delays for Flight to Miami with Flight
+Number", x = "Departure Delay (minutes)", y = "Arrival Delay (minutes)")
+
+#scatterplot for arrival delay and departure delay ggplot(df6, aes(x =
+dep_delay, y = arr_delay)) + geom_point(alpha = 0.5) + \# Adding
+transparency for better visualization geom_smooth(method = "lm", color =
+"red") + \# Adding a linear regression line labs(title = "Relationship
+Between Arrival Delay and Departure Delay", x = "Departure Delay
+(minutes)", y = "Arrival Delay (minutes)")
